@@ -1,7 +1,4 @@
 
-      $(document).ready(function() {
-     $("a.fancy").fancyZoom();
-   }); 
    /////////////
 function currentTime() {
   var date = new Date(); /* creating object of Date class */
