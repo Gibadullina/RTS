@@ -7,11 +7,53 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="../js/jquery.fancyzoom.min.js"></script> 
   <script type="text/javascript">
+   var sold=false;
+   var ff=true;
+   var checkStart=false;
+
       $(document).ready(function() {
-     $("a.fancy").fancyZoom();
+	   $("#finish").hide();
+	   $("a.fancy").fancyZoom();
+	  // начало имитации
+	  $("#start").click(function() {
+    //   $(this).css("backgroundColor","brown");
+	   $(this).hide();
+	   // показать кнопку финиша
+	   $("#finish").show();
+	   checkStart=true;
+	   if (checkStart) {
+	   //продать яйца
+	   $("#sell").click(function() {
+	 $("#ink").attr("src", "../img/5.png");
+	 $("#ink1").attr("href", "../img/4.png");
+	   sold=true;
+ })
+ //переворот
+ 	   $("#turn").click(function() {
+	
+	   if (sold==false) {
+	   if (ff) {
+	 $("#ink").attr("src", "../img/66.png");
+	    ff=false;
+	 } else {
+	 $("#ink").attr("src", "../img/2.png");
+	    ff=true;
+	 }}
+ })
+   } //if 
+   })
+       // Конец имитация
+	   	  $("#finish").click(function() {
+	   $(this).hide();
+	   $("#start").show();
+	   })
    }); 
    /////////////
-
+  /*
+    <p><a href="../img/3.png" class="fancy"><img src="../img/1.png"></a></p>
+   <p><a href="../img/4.png" class="fancy"><img src="../img/5.png"></a></p>
+    <p><a href="../img/4.png" class="fancy"><img src="../img/6.png"></a></p>
+  */
 </script>
 
 <h1 id="inf">Имитационная модель системы реального времени - Инкубатор. 
@@ -20,16 +62,22 @@
 <div id="clock"></div>
 </head>
 <body>
+  <div class="manage" id="m1"><p>Управление</p>
+  <button class="run" id="start">Запустить имитацию</button>
+   <button class="run" id="finish">Закончить имитацию</button>
 
- <p><a href="../img/3.png" class="fancy"><img src="../img/2.png"></a></p>
-  <p><a href="../img/3.png" class="fancy"><img src="../img/1.png"></a></p>
-   <p><a href="../img/4.png" class="fancy"><img src="../img/5.png"></a></p>
-    <p><a href="../img/4.png" class="fancy"><img src="../img/6.png"></a></p>
-	
-  <p><a href="../img/big.jpg" class="fancy"><img src="../img/small.jpg"></a></p>
-  <p><a href="../img/big.jpg" class="fancy"><img src="../img/small.jpg"></a></p>
-   <p><a href="../img/big.jpg" class="fancy"><img src="../img/small.jpg"></a></p>
- <script src="../js/test.js"></script >
+            <!-- Режимы работы Модели-->
+	<button class="run" id="auto">Автоматический режим</button>
+   <button class="run" id="manual">Ручной режим</button>
+			
+  </div>
+    <button id="sell">Продать яйца</button>
+	  <button id="turn">Перевернуть</button>
+  <p><a href="../img/3.png" class="fancy"  id="ink1"><img src="../img/2.png" id="ink"></a></p>
+
+
+ <script src="../js/oclock.js"></script >
+  <script src="../js/test.js"></script >
  <style>
 @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
@@ -47,6 +95,28 @@ body {
   font-size: 24px;
   color: #29a653;
 }
+
+.hide {
+   visibility: hidden;
+}
+
+.manage {
+     margin-left: auto;
+    margin-right: auto;
+   
+}
+.run    {
+	background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+	}
+#finish {
+ background-color: #b04c59; /* RED */
+}
+
   </style>
 </body>
 </html>
