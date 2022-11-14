@@ -8,10 +8,10 @@
 <script src="../js/jquery.fancyzoom.min.js"></script> 
 <!-- СКРИПТЫ-->
 
-  <script src="../js/test.js"></script >
+
     <script src="../js/butt.js"></script >
   <script type="text/javascript">
-   
+
    /////////////
   /*
     <p><a href="../img/3.png" class="fancy"><img src="../img/1.png"></a></p>
@@ -27,31 +27,60 @@
  <script src="../js/oclock.js"></script >
 </head>
 <body>
-  <div class="manage" id="m1"><p>Управление</p>
+  <div class="manage" id="m1"><p id="gg">Управление</p>
   <button class="run" id="start">Запустить имитацию</button>
    <button class="run" id="finish">Закончить имитацию</button>
 
             <!-- Режимы работы Модели-->
 	<button class="run" id="auto">Автоматический режим</button>
    <button class="run" id="manual">Ручной режим</button>
-			
-  </div>
-   <!-- Действия над инкубатором - Яйца-->
+   <div id="imit">
+      <!-- Действия над инкубатором - Яйца-->
    <button class="contr" id="buy">Купить яйца</button>
    <button class="contr" id="sell">Продать яйца</button>
    <button class="contr" id="turn">Перевернуть</button>
-	  <!--Эконочисекая часть-->
-	  <!-- Приводы для индикаторов-->
-	  
-  <p><a href="../img/3.png" class="fancy"  id="ink1"><img src="../img/2.png" id="ink"></a></p>
+   	
+	 <!-- Индикаторы-->
+	<div id="idif">
+   	<h2>Индикаторы</h2>
+	<p id="temp"></p>
+	<p id ="hum"></p>
+	
+	</div>
+    <!-- Инкубатор-->
+    <p id="eggs"><a href="../img/3.png" class="fancy"  id="ink1"><img src="../img/2.png" id="ink"></a></p>
 
+	<div class="econom">
+	  <!--Экономическая часть-->
+	  <h2>Доход</h2>
+	  <p id="soldT"></p>
+      <p id="sumT"></p>	 
+	  
+	  <h2>Затраты</h2>
+	  Электроэнергия
+	  <p id="z1"></p>
+	  <p id="sumZ1"></p>
+
+	  Яйца для инкубации
+	  <p id="z1"></p>
+	  <p id="sumZ1"></p>
+	  
+      <h2>Ремонт оборудования</h2>
+	  
+	  <h2>Прибыль</h2>
+	   <p id="itog"></p>
+	  <!-- Приводы для индикаторов-->
+	  </div>
+	</div>    <!-- блок имитации-->
+ 
+  </div>   <!-- блок управления-->
 
 
  <style>
 @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
 body {
-  background-color: lightgrey;
+  background-color: #d4c9d6;
 }
 
 #clock {
@@ -59,18 +88,18 @@ body {
   color: #66ff99;
   /font-size: 56px;
   text-align: left;
+  margin-left:15px;
 } 
 #inf {
   font-size: 24px;
   color: #29a653;
 }
 
-
-
 .manage {
-     margin-left: auto;
+    margin-left: auto;
     margin-right: auto;
-   
+	align-center:true;
+  
 }
 .run    {
 	background-color: #4CAF50; /* Green */
@@ -80,8 +109,42 @@ body {
     text-align: center;
     font-size: 16px;
 	}
+.contr  {
+	background-color: #9f4cb0; /* purple*/
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+	margin-top:10px;
+	}
+
 #finish {
  background-color: #b04c59; /* RED */
+}
+ 
+ #gg {
+  font-size: 20px;
+  color: #29a653;
+ }
+#eggs {
+    margin-left: 450px;
+    margin-right: auto;
+    width: 6em
+}
+.econom {
+    margin-left: 900px;
+    margin-right: auto;
+	margin-top:-375px;
+    width: 30em
+}
+#idif {
+   margin-left: 100px;
+    margin-right: auto;
+    width: 30em
+}
+#manual{
+ background-color:#9ec271;
 }
 
   </style>
