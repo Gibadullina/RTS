@@ -7,11 +7,11 @@
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="../js/jquery.fancyzoom.min.js"></script> 
 <!-- СКРИПТЫ-->
- <script src="../js/oclock.js"></script >
+
   <script src="../js/test.js"></script >
     <script src="../js/butt.js"></script >
   <script type="text/javascript">
-
+   
    /////////////
   /*
     <p><a href="../img/3.png" class="fancy"><img src="../img/1.png"></a></p>
@@ -24,6 +24,7 @@
 Гибадуллина Элина Юлаевна ПИ-421
 </h1> 
 <div id="clock"></div>
+ <script src="../js/oclock.js"></script >
 </head>
 <body>
   <div class="manage" id="m1"><p>Управление</p>
@@ -35,8 +36,13 @@
    <button class="run" id="manual">Ручной режим</button>
 			
   </div>
-    <button id="sell">Продать яйца</button>
-	  <button id="turn">Перевернуть</button>
+   <!-- Действия над инкубатором - Яйца-->
+   <button class="contr" id="buy">Купить яйца</button>
+   <button class="contr" id="sell">Продать яйца</button>
+   <button class="contr" id="turn">Перевернуть</button>
+	  <!--Эконочисекая часть-->
+	  <!-- Приводы для индикаторов-->
+	  
   <p><a href="../img/3.png" class="fancy"  id="ink1"><img src="../img/2.png" id="ink"></a></p>
 
 
@@ -59,9 +65,7 @@ body {
   color: #29a653;
 }
 
-.hide {
-   visibility: hidden;
-}
+
 
 .manage {
      margin-left: auto;

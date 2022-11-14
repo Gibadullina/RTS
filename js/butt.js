@@ -3,39 +3,42 @@
    var checkStart=false;
 
       $(document).ready(function() {
+	   $(".contr").hide();
 	   $("#finish").hide();
 	   $("a.fancy").fancyZoom();
 	  // начало имитации
 	  $("#start").click(function() {
-    //   $(this).css("backgroundColor","brown");
 	   $(this).hide();
-	   // показать кнопку финиша
 	   $("#finish").show();
+	    $(".contr").show();
 	   checkStart=true;
-	   if (checkStart) {
+	  
 	   //продать яйца
 	   $("#sell").click(function() {
 	 $("#ink").attr("src", "../img/5.png");
 	 $("#ink1").attr("href", "../img/4.png");
 	   sold=true;
- })
- //переворот
+         })
+		 
+       //переворот
  	   $("#turn").click(function() {
-	
+		   
 	   if (sold==false) {
-	   if (ff) {
-	 $("#ink").attr("src", "../img/66.png");
+	        if (ff) {
+	   $("#ink").attr("src", "../img/66.png");
 	    ff=false;
-	 } else {
-	 $("#ink").attr("src", "../img/2.png");
+	     } else {
+	   $("#ink").attr("src", "../img/2.png");
 	    ff=true;
-	 }}
- })
-   } //if 
+	     }}
+       })
+     //if 
    })
        // Конец имитация
 	   	  $("#finish").click(function() {
 	   $(this).hide();
 	   $("#start").show();
+	    $(".contr").hide();
 	   })
-   }); 
+	    
+   });
