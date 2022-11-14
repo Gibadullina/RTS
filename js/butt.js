@@ -2,7 +2,7 @@
    var ff=true;
    var checkStart=false;
    
-   var perc=0.98;
+   var perc=0;
    
    var soldEggs=0;
    var soldSum=0;
@@ -26,7 +26,8 @@
 		document.getElementById("z2").innerText="Затрачено: "+el2+" Квт*ч";
 		//сумма
 		document.getElementById("sumZ2").innerText="Сумма затрат: "+zEl*el2+" руб.";
-	   
+	   // процент вылупления
+	   document.getElementById("perc").innerText="Вероятность вылупления: "+perc+" %";
 	   $("#finish").hide();
 	   $("a.fancy").fancyZoom();
 	  // начало имитации
@@ -52,6 +53,7 @@
 	   document.getElementById("z1").innerText="Закупка яиц: "+boughtEggs+" шт";
 	   document.getElementById("sumZ1").innerText="Сумма закупки: "+boughtSum+" руб.";	
 	   sold=false;
+	   perc=0.5;
 		 }
 	})
 		
@@ -62,17 +64,19 @@
 	 $("#ink").attr("src", "../img/5.png");
 	 $("#ink1").attr("href", "../img/4.png");
 	 //расчет дохода
-	 soldEggs+=bEggs*perc;
+	 soldEggs+=bEggs*perc/100;
 	 soldSum=soldSum+soldEggs*50;
 	 document.getElementById("soldT").innerText="Продано единиц продукции: "+soldEggs+" шт";
 	 document.getElementById("sumT").innerText="Сумма продаж: "+soldSum+" руб.";
 	   sold=true;
+	   perc=0;
 		   }
          })
 		 
        //переворот
  	   $("#turn").click(function() {		   
 	   if (sold==false) {
+		   perc+=5;
 	        if (ff) {
 	   $("#ink").attr("src", "../img/66.png");
 	    ff=false;
@@ -83,6 +87,8 @@
        })
      //if 
    })
+   
+   
        // Конец имитация
 	   	  $("#finish").click(function() {
 	   $(this).hide();
@@ -118,10 +124,17 @@
 		document.getElementById("sumZ2").innerText="Сумма затрат: "+zEl*el2+" руб.";
 		var t = setTimeout(function(){ zatr()}, 1000); 
         el2+=0.5;
+		document.getElementById("itog").innerText="Прибыль: "+parseFloat(soldSum-(boughtSum+zEl*el2-0))+" руб.";
+		 if (perc>=0.5) {
+		perc+=0.5;
+		document.getElementById("perc").innerText="Вероятность вылупления: "+parseFloat(Math.round(perc))+" %";
+		 }
 		}
 		zatr();
 			
+		if (perc>98) {
 			
-
+		}	
+ 
 
    });
