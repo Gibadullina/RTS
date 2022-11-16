@@ -47,11 +47,12 @@
 	    //купить яйца-------------------------------------------------
 		$("#buy").click(function() {
 		 if (sold) {
+			 kolAcc1=0;
 			alert("Куплено 100 яиц"); 
 	   //меняем картинку инкубатора
 	   $("#ink").attr("src", "../img/2.png");
 	    $("#ink1").attr("href", "../img/3.png");
-		   setTimeout(accTemp,10000); //запуск аварии с температурой
+		   setTimeout(accTemp,5000); //запуск аварии с температурой
 		//расчет расхода на покупку
 		boughtEggs+=bEggs;
 		boughtSum=+boughtEggs*20;
@@ -79,7 +80,6 @@
 	   	document.getElementById("soldT").innerText="Продано единиц продукции: "+soldEggs+" шт";
 	   	document.getElementById("sumT").innerText="Сумма продаж: "+soldSum+" руб.";
 	   	sold=true;
-		kolAcc1=0;
 	   	perc=0;
 		percF=60;
 				} else {
@@ -98,9 +98,11 @@
 	        if (ff) {
 	   $("#ink").attr("src", "../img/66.png"); //замена картинки 
 	    ff=false;
+		document.getElementById("perc").innerText="Вероятность вылупления: "+parseFloat(Math.round(perc))+" %";
 	     } else {
 	   $("#ink").attr("src", "../img/2.png"); //замена картинки 
 	    ff=true;
+		document.getElementById("perc").innerText="Вероятность вылупления: "+parseFloat(Math.round(perc))+" %";
 	       }} else {
 			   alert("Оптимальное кол-во переворачиваний достигнуто!")
 		    }
@@ -117,6 +119,7 @@
 	   //скрываем элементы имитациии
 	    $('#imit').hide();
        // обнуляем данные
+	      kolAcc1=0;
 	      perc=0;
           soldEggs=0;
 	      soldSum=0;
@@ -206,37 +209,42 @@
 		 //Аварийные ситуации
 		 //accident 1 
 		 function accTemp() { 
+
 		 if  (kolAcc1<=1) {
 			 checkTemp=false;
-			 if (kolAcc1===0) {
+			 if (kolAcc1==0) {
+				 alert("Опасно! Повышение температуры");
 				    var highTemp=[];
 					var hT=Math.random();
 				  for (var i=0;i<12;i++) {
 					  highTemp[i]=50+i;
 				     }
 				document.getElementById("temp").innerText="Температура: "+parseFloat(highTemp[Math.floor(Math.random() * highTemp.length)]+parseFloat(hT.toFixed(2)))+" C";
-				
-				tempColor();
 				kolAcc1+=1;
+				tempColor();
+				
 			 } else {
+				 alert("Опасно! Понижение температуры");
 				 	var lowTemp=[];
 					var lT=Math.random();
 				     for (var i=0;i<12;i++) {
 					  lowTemp[i]=20+i;
 				     }
-				document.getElementById("temp").innerText="Температура: "+parseFloat(lowTem[Math.floor(Math.random() * lowTem.length)]+parseFloat(lT.toFixed(2)))+" C";
-			
-				tempColor();
-				 
-				kolAcc1+=1;
-			 }
+				document.getElementById("temp").innerText="Температура: "+parseFloat(lowTemp[Math.floor(Math.random() * lowTemp.length)]+parseFloat(lT.toFixed(2)))+" C";
+			    kolAcc1+=1;
+				tempColor2();
+			 } 
+		 } else {
+			kolAcc1+=1;
+          	$("#temp").css("color","black");
+			checkTemp=true;
 		 }
-		 var q = setTimeout(function(){ accTemp()}, 35000); 	 
+		  var q = setTimeout(function(){ accTemp()}, 10000); 
 		 }
 		 
 		 var redD=true;
         function tempColor() {
-			if (!checkTemp) {
+			if ((!checkTemp)&& (kolAcc1==1)){
 				if (redD) {
                      $("#temp").css("color","red");
 		             redD=false;
@@ -244,11 +252,28 @@
 			       $("#temp").css("color","black");
 		            redD=true;
 			      }
-                
+                perc-=0.3;
 			 }
-			 if (kolAcc1<1) {
-		var tC = setTimeout(function(){ tempColor()}, 500); 
+		var tC = setTimeout(function(){ tempColor()}, 500); 			 
+		     }
+			 
+		 var blueD=true;
+        function tempColor2() {
+			if ((!checkTemp)&& (kolAcc1==2)) {
+				if (blueD) {
+                     $("#temp").css("color","blue");
+		             blueD=false;
+			     } else {
+			       $("#temp").css("color","black");
+		            blueD=true;
+			      }
+                 perc-=0.3;
 			 }
-		}
- 
+		var tC2 = setTimeout(function(){ tempColor2()}, 500); 			 
+		     }     
+			 
+			 function normalW ()
+			 {
+				 
+			 }
    });
