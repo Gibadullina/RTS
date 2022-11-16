@@ -100,7 +100,9 @@
 		
 		//Индикаторы
 		function idfic() {
+		//массив температур
 		var tem= [37,38,39];
+		// создание и заполнение массива влажности
 		var humid=[];
 		 for (var i=0;i<12;i++) {
 			 humid[i]=50+i;
@@ -124,9 +126,11 @@
 		document.getElementById("sumZ2").innerText="Сумма затрат: "+zEl*el2+" руб.";
 		var t = setTimeout(function(){ zatr()}, 1000); 
         el2+=0.5;
+		//пересчет прибыли
 		document.getElementById("itog").innerText="Прибыль: "+parseFloat(soldSum-(boughtSum+zEl*el2-0))+" руб.";
 		 if (perc>=0.5) {
 		perc+=0.5;
+		//пересчет процента вылупления
 		document.getElementById("perc").innerText="Вероятность вылупления: "+parseFloat(Math.round(perc))+" %";
 		 }
 		}
