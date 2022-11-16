@@ -54,6 +54,7 @@
 	   document.getElementById("sumZ1").innerText="Сумма закупки: "+boughtSum+" руб.";	
 	   sold=false;
 	   perc=0.5;
+	   checkTurn=0;
 		 }
 	})
 		
@@ -61,29 +62,38 @@
 	   $("#sell").click(function() {
 		   if (sold==false) {
 			   //меняем картинку инкубатора
-	 $("#ink").attr("src", "../img/5.png");
-	 $("#ink1").attr("href", "../img/4.png");
-	 //расчет дохода
-	 soldEggs+=bEggs*perc/100;
-	 soldSum=soldSum+soldEggs*50;
-	 document.getElementById("soldT").innerText="Продано единиц продукции: "+soldEggs+" шт";
-	 document.getElementById("sumT").innerText="Сумма продаж: "+soldSum+" руб.";
-	   sold=true;
-	   perc=0;
+	   	$("#ink").attr("src", "../img/5.png");
+	   	$("#ink1").attr("href", "../img/4.png");
+	   	//расчет дохода
+	   	soldEggs+=Math.round(bEggs*perc/100);
+	   	soldSum=soldSum+soldEggs*50;
+		//сообщение пользователю
+		alert("Продано яиц "+soldEggs+" шт. \nНа сумму "+soldSum+" рублей");
+		//изменение ст
+	   	document.getElementById("soldT").innerText="Продано единиц продукции: "+soldEggs+" шт";
+	   	document.getElementById("sumT").innerText="Сумма продаж: "+soldSum+" руб.";
+	   	sold=true;
+	   	perc=0;
+		percF=60;
 		   }
          })
-		 
+		 var checkTurn=0
        //переворот
  	   $("#turn").click(function() {		   
-	   if (sold==false) {
+	   if (sold==false)  {
+		   if (checkTurn<7) {
 		   perc+=5;
+		   checkTurn+=1;
 	        if (ff) {
 	   $("#ink").attr("src", "../img/66.png");
 	    ff=false;
 	     } else {
 	   $("#ink").attr("src", "../img/2.png");
 	    ff=true;
-	     }}
+	       }} else {
+			   alert("Оптимальное кол-во переворачиваний достигнуто!")
+		    }
+		   }  else alert("Закупите яйца для инкубации!");
        })
      //if 
    })
@@ -95,6 +105,29 @@
 	   $("#start").show();
 	   //скрываем элементы имитациии
 	    $('#imit').hide();
+       // обнуляем данные
+	      perc=0;
+          soldEggs=0;
+	      soldSum=0;
+   
+	      boughtEggs=0;
+	      boughtSum=0;
+	      // электроэнергию
+	      el2=0;
+        // "опустошаем инкубатор"
+	   	$("#ink").attr("src", "../img/5.png");
+	    $("#ink1").attr("href", "../img/4.png");
+		// изменяем данные на стр)
+	   	document.getElementById("soldT").innerText="Продано единиц продукции: "+soldEggs+" шт";
+	   	document.getElementById("sumT").innerText="Сумма продаж: "+soldSum+" руб.";
+	   	document.getElementById("z1").innerText="Закупка яиц: "+boughtEggs+" шт";
+	   	document.getElementById("sumZ1").innerText="Сумма закупки: "+boughtSum+" руб.";
+	   //зартачено
+	   	document.getElementById("z2").innerText="Затрачено: "+el2+" Квт*ч";
+		//сумма
+	   	document.getElementById("sumZ2").innerText="Сумма затрат: "+zEl*el2+" руб.";
+	   // процент вылупления
+	   	document.getElementById("perc").innerText="Вероятность вылупления: "+perc+" %";
 	   })
 	    
 		
@@ -118,7 +151,7 @@
 		idfic();
         // затраты на электроэнергию
 
-        
+     
       	function zatr() {
 		//зартачено
 		document.getElementById("z2").innerText="Затрачено: "+el2+" Квт*ч";
@@ -128,17 +161,29 @@
         el2+=0.5;
 		//пересчет прибыли
 		document.getElementById("itog").innerText="Прибыль: "+parseFloat(soldSum-(boughtSum+zEl*el2-0))+" руб.";
-		 if (perc>=0.5) {
-		perc+=0.5;
-		//пересчет процента вылупления
-		document.getElementById("perc").innerText="Вероятность вылупления: "+parseFloat(Math.round(perc))+" %";
-		 }
-		}
+           }
 		zatr();
-			
-		if (perc>98) {
-			
-		}	
- 
+		
+		var percF=60
+		var checkFinish=true;
+		//прогресс яиц
+		function chicken() {
+			var q = setTimeout(function(){ chicken()}, 1000); 
+			if (perc>=0.5) {			
+			    if (percF>=0) {
+		perc+=1;
+		percF=percF-1;
+		//пересчет процента вылупления
+		document.getElementById("perc").innerText="Вероятность вылупления: "+parseFloat(Math.round(perc))+" %";		
+		        } else {
+					if (checkFinish) {
+						alert("Яйца вылупились! Необоходимо продать");
+						checkFinish=false;
+					}
+				}       
+		    }
+		}
+		
+		chicken();
 
    });
