@@ -14,6 +14,9 @@
 	 // электроэнергию
 		var el2=0;
 		var zEl=2;
+		
+		//переменные норм состояния
+		var checkTemp=true;
    
       $(document).ready(function() {
 	   $('#imit').hide();
@@ -33,7 +36,7 @@
 	  // начало имитации
 	  $("#start").click(function() {
 	   $(this).hide();
-	   
+	        
 	    //показываем кнопки управления и выхода
 	   $("#finish").show();
 	     //показываем инкубатор
@@ -48,6 +51,7 @@
 	   //меняем картинку инкубатора
 	   $("#ink").attr("src", "../img/2.png");
 	    $("#ink1").attr("href", "../img/3.png");
+		   setTimeout(accTemp,10000); //запуск аварии с температурой
 		//расчет расхода на покупку
 		boughtEggs+=bEggs;
 		boughtSum=+boughtEggs*20;
@@ -59,7 +63,7 @@
 		 }
 	})
 		
-	   //продать яйца----------------------------------------------
+	   //продать цыплят----------------------------------------------
 	   $("#sell").click(function() {
 		   if (sold==false) {
 			    if (percF==-1) {
@@ -77,22 +81,24 @@
 	   	sold=true;
 	   	perc=0;
 		percF=60;
-				} else {alert("Процесс инкубации не завершен! "+perc+"% завершения");}
-		   }
+				} else {
+					alert("Процесс инкубации не завершен! "+perc+"% завершения");
+				}
+		   } else alert("Закупите яйца для инкубации!", "Предупреждение!");
          })
-		 var checkTurn=0
+		 var checkTurn=0;
 		 
        //переворот------------------------------------------------------
  	   $("#turn").click(function() {		   
 	   if (sold==false)  {
-		   if (checkTurn<7) {
+		   if (checkTurn<7) { //проверка кол-ва переворотов
 		   perc+=5;
 		   checkTurn+=1;
 	        if (ff) {
-	   $("#ink").attr("src", "../img/66.png");
+	   $("#ink").attr("src", "../img/66.png"); //замена картинки 
 	    ff=false;
 	     } else {
-	   $("#ink").attr("src", "../img/2.png");
+	   $("#ink").attr("src", "../img/2.png"); //замена картинки 
 	    ff=true;
 	       }} else {
 			   alert("Оптимальное кол-во переворачиваний достигнуто!")
@@ -133,10 +139,11 @@
 	   // процент вылупления
 	   	document.getElementById("perc").innerText="Вероятность вылупления: "+perc+" %";
 	   })
-	    
 		
+		//функции ------------------------------------------------
 		//Индикаторы------------------------------------------------------------------------------------
 		function idfic() {
+			
 		//массив температур
 		var tem= [37,38,39];
 		// создание и заполнение массива влажности
@@ -146,12 +153,14 @@
 		 }
 		var tt=Math.random();
 		//температура
-		document.getElementById("temp").innerText="Температура: "+parseFloat(tem[Math.floor(Math.random() * tem.length)]+parseFloat(tt.toFixed(2)))+" C";
+			document.getElementById("hum").innerText="Влажность: "+humid[Math.floor(Math.random() * humid.length)]+" %";
+		
 		//влажность
-		document.getElementById("hum").innerText="Влажность: "+humid[Math.floor(Math.random() * humid.length)]+" %";
-	
+		if (checkTemp) {
+		document.getElementById("temp").innerText="Температура: "+parseFloat(tem[Math.floor(Math.random() * tem.length)]+parseFloat(tt.toFixed(2)))+" C";
+	    }
 		var t = setTimeout(function(){ idfic() }, 1000); 
-		}
+			}
 		idfic(); 
 		
         // затраты на электроэнергию------------------------------------------------------
@@ -180,14 +189,39 @@
 		//пересчет процента вылупления
 		document.getElementById("perc").innerText="Вероятность вылупления: "+parseFloat(Math.round(perc))+" %";		
 		        } else {
-					if (checkFinish) {
-						alert("Яйца вылупились! Необоходимо продать");
+					if (checkFinish) {						
+						alert("Цыплята вылупились! Необходимо продать");
+						 var audio = new Audio(); // Создаём новый элемент Audio
+                         audio.src = '../mp3/цыпа.mp3'; // Указываем путь к звуку "клика"
+                         audio.autoplay = true; // Автоматически запускаем
 						checkFinish=false;
 					}
 				}       
 		    }
 		}
-		
 		chicken();
+
+		  var kolAcc1=0;	
+		 //Аварийные ситуации
+		 //accident 1 
+		 function accTemp() { 
+		 if  (kolAcc1<=1) {
+			 alert("Луна");
+			 checkTemp=false;
+			 if (kolAcc1===0) {
+				    var highTemp=[];
+					var hT=Math.random();
+				  for (var i=0;i<12;i++) {
+					  highTemp[i]=50+i;
+				     }
+					 alert("Солнце");
+				document.getElementById("temp").innerText="Температура: "+parseFloat(highTemp[Math.floor(Math.random() * highTemp.length)]+parseFloat(hT.toFixed(2)))+" C";
+				kolAcc1+=1;
+			 } else {
+				kolAcc1+=1;
+			 }
+		 }
+		 var q = setTimeout(function(){ accTemp()}, 35000); 	 
+		 }
 
    });
