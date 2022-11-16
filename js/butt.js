@@ -79,6 +79,7 @@
 	   	document.getElementById("soldT").innerText="Продано единиц продукции: "+soldEggs+" шт";
 	   	document.getElementById("sumT").innerText="Сумма продаж: "+soldSum+" руб.";
 	   	sold=true;
+		kolAcc1=0;
 	   	perc=0;
 		percF=60;
 				} else {
@@ -206,7 +207,6 @@
 		 //accident 1 
 		 function accTemp() { 
 		 if  (kolAcc1<=1) {
-			 alert("Луна");
 			 checkTemp=false;
 			 if (kolAcc1===0) {
 				    var highTemp=[];
@@ -214,14 +214,41 @@
 				  for (var i=0;i<12;i++) {
 					  highTemp[i]=50+i;
 				     }
-					 alert("Солнце");
 				document.getElementById("temp").innerText="Температура: "+parseFloat(highTemp[Math.floor(Math.random() * highTemp.length)]+parseFloat(hT.toFixed(2)))+" C";
+				
+				tempColor();
 				kolAcc1+=1;
 			 } else {
+				 	var lowTemp=[];
+					var lT=Math.random();
+				     for (var i=0;i<12;i++) {
+					  lowTemp[i]=20+i;
+				     }
+				document.getElementById("temp").innerText="Температура: "+parseFloat(lowTem[Math.floor(Math.random() * lowTem.length)]+parseFloat(lT.toFixed(2)))+" C";
+			
+				tempColor();
+				 
 				kolAcc1+=1;
 			 }
 		 }
 		 var q = setTimeout(function(){ accTemp()}, 35000); 	 
 		 }
-
+		 
+		 var redD=true;
+        function tempColor() {
+			if (!checkTemp) {
+				if (redD) {
+                     $("#temp").css("color","red");
+		             redD=false;
+			     } else {
+			       $("#temp").css("color","black");
+		            redD=true;
+			      }
+                
+			 }
+			 if (kolAcc1<1) {
+		var tC = setTimeout(function(){ tempColor()}, 500); 
+			 }
+		}
+ 
    });
