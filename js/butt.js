@@ -17,7 +17,8 @@
 		
 		//переменные норм состояния
 		var checkTemp=true;
-   
+		//кол-во аварий
+         var avarii=0;
       $(document).ready(function() {
 	   $('#imit').hide();
 	  // строки расходов доходов
@@ -31,6 +32,8 @@
 		document.getElementById("sumZ2").innerText="Сумма затрат: "+zEl*el2+" руб.";
 	   // процент вылупления
 	   document.getElementById("perc").innerText="Вероятность вылупления: "+perc+" %";
+	   // кол-во аварий
+	   document.getElementById("avar").innerText="Аварийные ситуации: "+parseFloat(avarii)+" шт";
 	   $("#finish").hide();
 	   $("a.fancy").fancyZoom();
 	  // начало имитации
@@ -75,13 +78,14 @@
 	   	soldEggs+=Math.round(bEggs*perc/100);
 	   	soldSum=soldSum+soldEggs*50;
 		//сообщение пользователю
-		alert("Продано яиц "+soldEggs+" шт. \nНа сумму "+soldSum+" рублей");
+		alert("Продано яиц "+Math.round(bEggs*perc/100)+" шт. \nНа сумму "+Math.round(bEggs*perc/100)*50+" рублей");
 		//изменение ст
 	   	document.getElementById("soldT").innerText="Продано единиц продукции: "+soldEggs+" шт";
 	   	document.getElementById("sumT").innerText="Сумма продаж: "+soldSum+" руб.";
 	   	sold=true;
 	   	perc=0;
 		percF=60;
+		checkFinish=true;
 				} else {
 					alert("Процесс инкубации не завершен! "+perc+"% завершения");
 				}
@@ -126,6 +130,7 @@
    
 	      boughtEggs=0;
 	      boughtSum=0;
+		  avarii=0;
 	      // электроэнергию
 	      el2=0;
         // "опустошаем инкубатор"
@@ -204,7 +209,7 @@
 		    }
 		}
 		chicken();
-
+            var q;
 		  var kolAcc1=0;	
 		 //Аварийные ситуации
 		 //accident 1 
@@ -238,8 +243,9 @@
 			kolAcc1+=1;
           	$("#temp").css("color","black");
 			checkTemp=true;
+			clearTimeout(q);
 		 }
-		  var q = setTimeout(function(){ accTemp()}, 10000); 
+		  q = setTimeout(function(){ accTemp()}, 20000); 
 		 }
 		 
 		 var redD=true;
@@ -271,9 +277,35 @@
 			 }
 		var tC2 = setTimeout(function(){ tempColor2()}, 500); 			 
 		     }     
+			 var avarii=0;
+			$("#highT").click(function() { 
+			  if ((!checkTemp)&&(kolAcc1==1)) {
+			 $("#temp").css("color","blue");
+              setTimeout(function(){
+				   $("#temp").css("color","black");
+			  },3000);			  
+			 checkTemp=true;
+			 alert("Ввод в оптимальный режим");
+			 avarii+=1;
+			 document.getElementById("avar").innerText="Аварийные ситуации: "+parseFloat(avarii)+" шт";
+			  }
+			 })
 			 
-			 function normalW ()
-			 {
-				 
+			 
+			 $("#lowT").click(function() { 
+			  if ((!checkTemp)&&(kolAcc1==2)) {
+			 $("#temp").css("color","red");
+             setTimeout(function(){
+				   $("#temp").css("color","black");
 			 }
+				 ,3000);	
+            			 
+			 checkTemp=true;
+			 alert("Ввод в оптимальный режим");
+			 kolAcc1+=1;
+			 avarii+=1;
+			 document.getElementById("avar").innerText="Аварийные ситуации: "+parseFloat(avarii)+" шт";
+			  }
+			 })
+			 
    });
