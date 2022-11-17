@@ -20,6 +20,12 @@
 		var checkEl=true;
 		//кол-во аварий
          var avarii=0;
+		 //расходы ремонт
+			 var fixEL=0;
+			 var fixELSum=0;		 
+		 
+		 
+		 
       $(document).ready(function() {
 	   $('#imit').hide();
 	   $('#fix').hide();
@@ -34,6 +40,11 @@
 		document.getElementById("sumZ2").innerText="Сумма затрат: "+zEl*el2+" руб.";
 	   // процент вылупления
 	   document.getElementById("perc").innerText="Вероятность вылупления: "+perc+" %";
+	 
+	 	        //зартачено на ремонты
+		    document.getElementById("z3").innerText="Ремонтов: "+fixEL+" кол-во";
+		    //сумма
+		    document.getElementById("sumZ3").innerText="Сумма затрат: "+fixELSum+" руб.";
 	 
 	   $("#finish").hide();
 	   $("a.fancy").fancyZoom();
@@ -135,6 +146,9 @@
 	      boughtEggs=0;
 	      boughtSum=0;
 		  avarii=0;
+		  fixEL=0;
+		  fixELSum=0;
+		  
 	      // электроэнергию
 	      el2=0;
         // "опустошаем инкубатор"
@@ -153,7 +167,11 @@
 	   	document.getElementById("perc").innerText="Вероятность вылупления: "+perc+" %";
 		document.getElementById("avar").innerText="Аварийные ситуации: "+parseFloat(avarii)+" шт";
 	   })
-		
+		           
+	        //зартачено на ремонты
+		    document.getElementById("z3").innerText="Ремонтов: "+fixEL+" кол-во";
+		    //сумма
+		    document.getElementById("sumZ3").innerText="Сумма затрат: "+fixELSum+" руб.";
 		//функции ------------------------------------------------
 		//Индикаторы------------------------------------------------------------------------------------
 		function idfic() {
@@ -189,7 +207,7 @@
 		var t = setTimeout(function(){ zatr()}, 1000); 
         el2+=0.5;
 		//пересчет прибыли
-		document.getElementById("itog").innerText="Прибыль: "+parseFloat(soldSum-(boughtSum+zEl*el2-0))+" руб.";
+		document.getElementById("itog").innerText="Прибыль: "+parseFloat(soldSum-(boughtSum+zEl*el2-fixELSum))+" руб.";
            }
 		zatr();
 		
@@ -252,7 +270,7 @@
 			checkTemp=true;
 			clearTimeout(q);
 		 }
-		  q = setTimeout(function(){ accTemp()}, 20000); 
+		  q = setTimeout(function(){ accTemp()}, 25000); 
 		 }
 		 var scc1=0;
 		 var scc2=0;
@@ -318,8 +336,7 @@
 			  }
 			 })
 			 // авария номер 2
-			 var fixEL=0;
-			 var fixELSum=0;
+
 			 function accEl (){
 				 if (checkEl) {
 				 alert("Перебои с электричестовом")
@@ -345,18 +362,21 @@
 			 
 			 $("#fix").click(function() { 
 			  if (!checkEl) {
+			  $("#temp").css("color","black");
+			  $("#hum").css("color","black"); 
 			 checkEl=true;
 			 $("#ink").attr("src", "../img/2.png");
 	         $("#ink1").attr("href", "../img/3.png");
+			 
 			avarii+=1;
 			fixEL+=1;
-			fixELSum+=fixEl*300;
-			 $("#temp").css("color","black");
-			  $("#hum").css("color","black"); 
+			fixELSum=fixELSum+fixEL*300;
+           
 	        //зартачено на ремонты
 		    document.getElementById("z3").innerText="Ремонтов: "+fixEL+" кол-во";
 		    //сумма
 		    document.getElementById("sumZ3").innerText="Сумма затрат: "+fixELSum+" руб.";
+			document.getElementById("avar").innerText="Аварийные ситуации: "+parseFloat(avarii)+" шт";
 			 }	
 			 })
    });
