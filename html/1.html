@@ -31,9 +31,10 @@
   <button class="run" id="start">Запустить имитацию</button>
    <button class="run" id="finish">Закончить имитацию</button>
 
-            <!-- Режимы работы Модели-->
-	<button class="run" id="auto">Автоматический режим</button>
+            <!-- Режимы работы Модели   <button class="run" id="auto">Автоматический режим</button>-->
+	
    <button class="run" id="manual">Ручной режим</button>
+    <button class="contr" id="fix">Починить</button>
    <div id="imit">
       <!-- Действия над инкубатором - Яйца-->
    <button class="contr" id="buy">Купить яйца</button>
@@ -48,7 +49,7 @@
 	<p id="temp"></p>
 	<p id ="hum"></p>
 	<p id="perc"></p>
-	<p id="avar"></p>
+	<p id="avar">Аварийные ситуации 0 шт</p>
 
 	</div>
     <!-- Инкубатор-->
@@ -70,15 +71,18 @@
 	  <b>Электроэнергия</b>
 	  <p id="z2"></p>
 	  <p id="sumZ2"></p>
+      </div>
 
-
-	  
-      <h2>Ремонт оборудования</h2>
+	  <div class="econom2">
+      <h2>Ремонты</h2>
+	  <p id="z3"></p>
+	  <p id="sumZ3"></p>
 	  
 	  <h2>Прибыль</h2>
 	   <p id="itog"></p>
+	   </div>
 	  <!-- Приводы для индикаторов-->
-	  </div>
+	
 	</div>    <!-- блок имитации-->
  
   </div>   <!-- блок управления-->
@@ -128,6 +132,7 @@ body {
     text-align: center;
     font-size: 16px;
 	margin-top:10px;
+	
 	}
 
 #finish {
@@ -141,25 +146,33 @@ body {
   margin-left: 270px;
  }
 #eggs {
-    margin-left: 450px;
+    margin-left: 310px;
+	margin-top: -150px;
     margin-right: auto;
-    width: 6em
+    width: 6em;
+	
 }
 .econom {
-    margin-left: 900px;
+    margin-left: 610px;
     margin-right: auto;
-	margin-top:-433px;
+	margin-top:-319px;
+    width: 30em
+}
+.econom2 {
+    margin-left: 930px;
+    margin-right: auto;
+	margin-top:-375px;
     width: 30em
 }
 #idif {
-   margin-left: 100px;
+   margin-left: 50px;
     margin-right: auto;
     width: 30em
 }
 #manual{
  background-color:#9ec271;
 }
-
+#highT, #lowT {background-color: #846bdb;}
   </style>
 </body>
 </html>

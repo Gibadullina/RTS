@@ -17,10 +17,12 @@
 		
 		//переменные норм состояния
 		var checkTemp=true;
+		var checkEl=true;
 		//кол-во аварий
          var avarii=0;
       $(document).ready(function() {
 	   $('#imit').hide();
+	   $('#fix').hide();
 	  // строки расходов доходов
 	   document.getElementById("soldT").innerText="Продано единиц продукции: "+soldEggs+" шт";
 	   document.getElementById("sumT").innerText="Сумма продаж: "+soldSum+" руб.";
@@ -32,8 +34,7 @@
 		document.getElementById("sumZ2").innerText="Сумма затрат: "+zEl*el2+" руб.";
 	   // процент вылупления
 	   document.getElementById("perc").innerText="Вероятность вылупления: "+perc+" %";
-	   // кол-во аварий
-	   document.getElementById("avar").innerText="Аварийные ситуации: "+parseFloat(avarii)+" шт";
+	 
 	   $("#finish").hide();
 	   $("a.fancy").fancyZoom();
 	  // начало имитации
@@ -44,7 +45,7 @@
 	   $("#finish").show();
 	     //показываем инкубатор
 	   $('#imit').show();
-	 
+	  $('#fix').show();
 
 	   checkStart=true;
 	    //купить яйца-------------------------------------------------
@@ -56,6 +57,8 @@
 	   $("#ink").attr("src", "../img/2.png");
 	    $("#ink1").attr("href", "../img/3.png");
 		   setTimeout(accTemp,5000); //запуск аварии с температурой
+		   setTimeout(accEl,15000); //запуск аварии с электричестовом
+		    setTimeout(accEl,48000);
 		//расчет расхода на покупку
 		boughtEggs+=bEggs;
 		boughtSum=+boughtEggs*20;
@@ -122,6 +125,7 @@
 	   $("#start").show();
 	   //скрываем элементы имитациии
 	    $('#imit').hide();
+		 $('#fix').hide();
        // обнуляем данные
 	      kolAcc1=0;
 	      perc=0;
@@ -147,6 +151,7 @@
 	   	document.getElementById("sumZ2").innerText="Сумма затрат: "+zEl*el2+" руб.";
 	   // процент вылупления
 	   	document.getElementById("perc").innerText="Вероятность вылупления: "+perc+" %";
+		document.getElementById("avar").innerText="Аварийные ситуации: "+parseFloat(avarii)+" шт";
 	   })
 		
 		//функции ------------------------------------------------
@@ -161,13 +166,16 @@
 			 humid[i]=50+i;
 		 }
 		var tt=Math.random();
-		//температура
-			document.getElementById("hum").innerText="Влажность: "+humid[Math.floor(Math.random() * humid.length)]+" %";
+
 		
-		//влажность
-		if (checkTemp) {
+		if (checkEl) {
+					   //влажность		
+			document.getElementById("hum").innerText="Влажность: "+humid[Math.floor(Math.random() * humid.length)]+" %";
+			if (checkTemp) {
+			//температура
 		document.getElementById("temp").innerText="Температура: "+parseFloat(tem[Math.floor(Math.random() * tem.length)]+parseFloat(tt.toFixed(2)))+" C";
-	    }
+	    }}
+		
 		var t = setTimeout(function(){ idfic() }, 1000); 
 			}
 		idfic(); 
@@ -214,7 +222,6 @@
 		 //Аварийные ситуации
 		 //accident 1 
 		 function accTemp() { 
-
 		 if  (kolAcc1<=1) {
 			 checkTemp=false;
 			 if (kolAcc1==0) {
@@ -247,10 +254,11 @@
 		 }
 		  q = setTimeout(function(){ accTemp()}, 20000); 
 		 }
-		 
+		 var scc1=0;
+		 var scc2=0;
 		 var redD=true;
         function tempColor() {
-			if ((!checkTemp)&& (kolAcc1==1)){
+			if ((!checkTemp)&& (kolAcc1==1)&&(scc1<10)){
 				if (redD) {
                      $("#temp").css("color","red");
 		             redD=false;
@@ -259,13 +267,14 @@
 		            redD=true;
 			      }
                 perc-=0.3;
+				scc1+=1;
 			 }
 		var tC = setTimeout(function(){ tempColor()}, 500); 			 
 		     }
 			 
 		 var blueD=true;
         function tempColor2() {
-			if ((!checkTemp)&& (kolAcc1==2)) {
+			if ((!checkTemp)&& (kolAcc1==2)&&(scc2<10)) {
 				if (blueD) {
                      $("#temp").css("color","blue");
 		             blueD=false;
@@ -274,6 +283,7 @@
 		            blueD=true;
 			      }
                  perc-=0.3;
+				 scc2+=1;
 			 }
 		var tC2 = setTimeout(function(){ tempColor2()}, 500); 			 
 		     }     
@@ -307,5 +317,46 @@
 			 document.getElementById("avar").innerText="Аварийные ситуации: "+parseFloat(avarii)+" шт";
 			  }
 			 })
+			 // авария номер 2
+			 var fixEL=0;
+			 var fixELSum=0;
+			 function accEl (){
+				 if (checkEl) {
+				 alert("Перебои с электричестовом")
+	        $("#ink").attr("src", "../img/1.png");
+	        $("#ink1").attr("href", "../img/3.png");
+               checkEl=false;	
+			   	//влажность		
+				document.getElementById("hum").innerText="Влажность: "+50+" %";
+			     $("#hum").css("color","red");  
+			    //температура
+		         document.getElementById("temp").innerText="Температура: "+10+" C"; 
+				  $("#temp").css("color","red");
+				  
+            	setTimeout(function(){
+					checkEl=true;
+			 $("#temp").css("color","black");
+			  $("#hum").css("color","black"); 					
+			  },10000);		   
+			 }
+			 }
 			 
+			 
+			 
+			 $("#fix").click(function() { 
+			  if (!checkEl) {
+			 checkEl=true;
+			 $("#ink").attr("src", "../img/2.png");
+	         $("#ink1").attr("href", "../img/3.png");
+			avarii+=1;
+			fixEL+=1;
+			fixELSum+=fixEl*300;
+			 $("#temp").css("color","black");
+			  $("#hum").css("color","black"); 
+	        //зартачено на ремонты
+		    document.getElementById("z3").innerText="Ремонтов: "+fixEL+" кол-во";
+		    //сумма
+		    document.getElementById("sumZ3").innerText="Сумма затрат: "+fixELSum+" руб.";
+			 }	
+			 })
    });
